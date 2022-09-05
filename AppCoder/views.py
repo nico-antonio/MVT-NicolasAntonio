@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from  .models import Familiar
+from django.template import Template, loader 
 # Create your views here.
 
 def familiar(request):
@@ -11,4 +12,7 @@ def familiar(request):
     padre.save()
     hermano.save()
     texto=f"Mi nombre es {madre.nombre}, tengo {madre.edad} años, nací el {madre.fecha_de_nacimiento} y soy {madre.relacion} de Nico, Mi nombre es {padre.nombre}, tengo {padre.edad} años, nací el {padre.fecha_de_nacimiento} y soy {padre.relacion} de Nico, Mi nombre es {hermano.nombre}, tengo {hermano.edad} años, nací el {hermano.fecha_de_nacimiento} y soy {hermano.relacion} de Nico" 
-    return HttpResponse(texto) 
+    diccionario={"clave1":texto}
+    plantilla=loader.get_template('template.html')
+    documento=plantilla.render(diccionario)
+    return HttpResponse(documento) 
